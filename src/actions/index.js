@@ -4,3 +4,10 @@ export const setEmail = (email) => {
     payload: email,
   };
 };
+
+export const setPassword = (password) => {
+  return {
+    type: "SET_PASSWORD",
+    payload: password,
+  };
+};
