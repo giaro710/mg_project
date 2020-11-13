@@ -6,7 +6,7 @@ class Login extends React.Component {
 
   onEmailChange = (e) => {
     this.setState({ invalidEmail: false });
-    if (e.target.value.includes("@")) {
+    if (e.target.value.includes("@") || e.target.value === "") {
       console.log("ottimo");
     } else {
       this.setState({ invalidEmail: true });
