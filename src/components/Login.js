@@ -1,4 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { setEmail } from "../actions";
+
 import "../Login.css";
 
 class Login extends React.Component {
@@ -8,6 +12,7 @@ class Login extends React.Component {
     this.setState({ invalidEmail: false });
     if (e.target.value.includes("@") || e.target.value === "") {
       console.log("ottimo");
+      this.props.setEmail(e.target.value);
     } else {
       this.setState({ invalidEmail: true });
     }
@@ -78,4 +83,9 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return { email: state.email };
+};
+
+export default connect(mapStateToProps, { setEmail })(Login);
