@@ -11,8 +11,10 @@ class Login extends React.Component {
 
   onEmailChange = (e) => {
     this.setState({ invalidEmail: false });
-    if (e.target.value.includes("@") || e.target.value === "") {
+    if (e.target.value.includes("@")) {
       this.props.setEmail(e.target.value);
+    } else if (e.target.value === "") {
+      this.setState({ invalidEmail: false });
     } else {
       this.setState({ invalidEmail: true });
     }
@@ -22,6 +24,8 @@ class Login extends React.Component {
     this.setState({ invalidPassword: false });
     if (e.target.value.length >= 8) {
       this.props.setPassword(e.target.value);
+    } else if (e.target.value === "") {
+      this.setState({ invalidPassword: false });
     } else {
       this.setState({ invalidPassword: true });
     }
