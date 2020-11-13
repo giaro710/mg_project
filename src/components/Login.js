@@ -2,6 +2,26 @@ import React from "react";
 import "../Login.css";
 
 class Login extends React.Component {
+  state = { invalidEmail: false, invalidPassword: false };
+
+  onEmailChange = (e) => {
+    this.setState({ invalidEmail: false });
+    if (e.target.value.includes("@")) {
+      console.log("ottimo");
+    } else {
+      this.setState({ invalidEmail: true });
+    }
+  };
+
+  onPasswordChange = (e) => {
+    this.setState({ invalidPassword: false });
+    if (e.target.value.length >= 8) {
+      console.log("ottimo");
+    } else {
+      this.setState({ invalidPassword: true });
+    }
+  };
+
   render() {
     return (
       <div className="login-container">
@@ -9,19 +29,47 @@ class Login extends React.Component {
         <p className="login__sub-title">Accedi alla dashboard</p>
 
         <div className="login__inputs-container">
-          <div className="login__input-field">
+          <div
+            className={`login__input-field ${
+              this.state.invalidEmail ? "border-error" : ""
+            }`}
+          >
             <i className="fas fa-user login__icon"></i>
-            <input className="login__input" type="email" placeholder="Email" />
+            <input
+              onChange={(e) => this.onEmailChange(e)}
+              className="login__input"
+              type="text"
+              placeholder="Email"
+            />
           </div>
+          <p
+            className={`login__invalid-text ${
+              this.state.invalidEmail ? "" : "not-visible"
+            }`}
+          >
+            Invalid Email
+          </p>
 
-          <div className="login__input-field">
+          <div
+            className={`login__input-field ${
+              this.state.invalidPassword ? "border-error" : ""
+            }`}
+          >
             <i className="fas fa-lock login__icon"></i>
             <input
+              onChange={(e) => this.onPasswordChange(e)}
               className="login__input"
-              type="password"
+              type="text"
               placeholder="Password"
             />
           </div>
+          <p
+            className={`login__invalid-text ${
+              this.state.invalidPassword ? "" : "not-visible"
+            }`}
+          >
+            Invalid Password
+          </p>
 
           <button className="login__btn">Sign in</button>
         </div>

@@ -6,7 +6,7 @@
 
 .login-container {
   width: 350px;
-  height: 300px;
+  height: 320px;
   margin: 25vh auto;
   text-align: center;
   font-family: "Manrope", sans-serif;
@@ -37,7 +37,7 @@
   border: 1px solid #abc5d3;
 
   padding-left: 18px;
-  margin: 12px 0;
+  margin: 12px 0 3px 0;
 
   display: flex;
   align-items: center;
@@ -70,10 +70,18 @@
   font-family: "Manrope", sans-serif;
 }
 
+.login__invalid-text {
+  float: left;
+  color: #0f466e;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 2px 0 8px 0;
+}
+
 .login__btn {
   height: 40px;
   border-radius: 4px;
-  margin-top: 6px;
+  margin-top: 16px;
   color: #fff;
   background: #36b7ff;
   font-size: 14px;
@@ -83,4 +91,12 @@
 
 .login__btn:hover {
   background: #2a92cc;
+}
+
+.not-visible {
+  visibility: hidden;
+}
+
+.border-error {
+  border: 2px solid red;
 }
