@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { setEmail } from "../actions";
@@ -9,25 +9,32 @@ import "../Login.css";
 const Login = (props) => {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
+  // console.log(props);
 
-  const onEmailChange = (e) => {
+  useEffect(() => {
+    console.log("Is changed");
+  }, [props.email]);
+
+  const onEmailChange = (email) => {
     setInvalidEmail(false);
-    if (e.target.value.includes("@")) {
-      props.setEmail(e.target.value);
-    } else if (e.target.value === "") {
+    if (email.includes("@")) {
+      props.setEmail(email);
+    } else if (email === "") {
       setInvalidEmail(false);
     } else {
+      props.setEmail(email);
       setInvalidEmail(true);
     }
   };
 
-  const onPasswordChange = (e) => {
+  const onPasswordChange = (password) => {
     setInvalidPassword(false);
-    if (e.target.value.length >= 8) {
-      this.props.setPassword(e.target.value);
-    } else if (e.target.value === "") {
+    if (password.length >= 8) {
+      props.setPassword(password);
+    } else if (password === "") {
       setInvalidPassword(false);
     } else {
+      props.setPassword(password);
       setInvalidPassword(true);
     }
   };
@@ -43,7 +50,7 @@ const Login = (props) => {
         >
           <i className="fas fa-user login__icon"></i>
           <input
-            onChange={(e) => onEmailChange(e)}
+            onChange={(e) => onEmailChange(e.target.value)}
             className="login__input"
             type="text"
             placeholder="Email"
@@ -62,7 +69,7 @@ const Login = (props) => {
         >
           <i className="fas fa-lock login__icon"></i>
           <input
-            onChange={(e) => onPasswordChange(e)}
+            onChange={(e) => onPasswordChange(e.target.value)}
             className="login__input"
             type="text"
             placeholder="Password"
@@ -84,7 +91,7 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => {
   console.log(state);
-  return { email: state.email };
+  return { email: state.email, password: state.password };
 };
 
 export default connect(mapStateToProps, { setEmail, setPassword })(Login);
