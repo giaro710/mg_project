@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
-import { setEmail } from "../actions";
-import { setPassword } from "../actions";
+import { setEmail } from '../redux/actions';
+import { setPassword } from '../redux/actions';
 
-import "../Login.css";
+import '../Login.css';
 
 const Login = (props) => {
   const [invalidEmail, setInvalidEmail] = useState(false);
@@ -12,14 +12,14 @@ const Login = (props) => {
   // console.log(props);
 
   useEffect(() => {
-    console.log("Is changed");
+    console.log('Is changed');
   }, [props.email]);
 
   const onEmailChange = (email) => {
     setInvalidEmail(false);
-    if (email.includes("@")) {
+    if (email.includes('@')) {
       props.setEmail(email);
-    } else if (email === "") {
+    } else if (email === '') {
       setInvalidEmail(false);
     } else {
       props.setEmail(email);
@@ -31,7 +31,7 @@ const Login = (props) => {
     setInvalidPassword(false);
     if (password.length >= 8) {
       props.setPassword(password);
-    } else if (password === "") {
+    } else if (password === '') {
       setInvalidPassword(false);
     } else {
       props.setPassword(password);
@@ -46,38 +46,38 @@ const Login = (props) => {
 
       <div className="login__inputs-container">
         <div
-          className={`login__input-field ${invalidEmail ? "border-error" : ""}`}
+          className={`login__input-field ${invalidEmail ? 'border-error' : ''}`}
         >
           <i className="fas fa-user login__icon"></i>
           <input
             onChange={(e) => onEmailChange(e.target.value)}
             className="login__input"
-            type="text"
+            type="email"
             placeholder="Email"
           />
         </div>
         <p
-          className={`login__invalid-text ${invalidEmail ? "" : "not-visible"}`}
+          className={`login__invalid-text ${invalidEmail ? '' : 'not-visible'}`}
         >
           Invalid Email
         </p>
 
         <div
           className={`login__input-field ${
-            invalidPassword ? "border-error" : ""
+            invalidPassword ? 'border-error' : ''
           }`}
         >
           <i className="fas fa-lock login__icon"></i>
           <input
             onChange={(e) => onPasswordChange(e.target.value)}
             className="login__input"
-            type="text"
+            type="password"
             placeholder="Password"
           />
         </div>
         <p
           className={`login__invalid-text ${
-            invalidPassword ? "" : "not-visible"
+            invalidPassword ? '' : 'not-visible'
           }`}
         >
           Invalid Password

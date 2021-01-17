@@ -9,7 +9,7 @@
   height: 320px;
   margin: 25vh auto;
   text-align: center;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 .login__title {
@@ -45,7 +45,7 @@
 }
 
 .login__input-field:focus-within {
-  border: 2px solid #36b7ff;
+  border: 2px solid #f68228;
 }
 
 .login__icon {
@@ -67,7 +67,7 @@
   color: #abc5d3;
   background: #fff;
   font-size: 16px;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 .login__invalid-text {
@@ -83,14 +83,14 @@
   border-radius: 4px;
   margin-top: 16px;
   color: #fff;
-  background: #36b7ff;
+  background: #f68228;
   font-size: 14px;
   text-transform: uppercase;
   border: none;
 }
 
 .login__btn:hover {
-  background: #2a92cc;
+  background: #db7324;
 }
 
 .not-visible {
