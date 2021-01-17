@@ -1,0 +1,3 @@
+export const types = {
+  SETEMAILANDPASSWORD: 'SET_EMAIL_AND_PASSWORD',
+};
