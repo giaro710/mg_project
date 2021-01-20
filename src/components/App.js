@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from './Login';
+import Login from './Login/Login';
 import Login2 from './Login2';
-import Landing from './Landing';
+import Landing from './LandingPage/Landing';
 
 const App = () => {
   const [token, setToken] = useState(true);
