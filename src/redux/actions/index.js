@@ -43,6 +43,7 @@ export const auth = (username, password) => {
         // console.log(response.data.token);
         // console.log(response.data.settings.authTokenLifetime);
         dispatch(authSuccess(response.data));
+        this.props.history.push('/');
       })
       .catch((err) => {
         console.log(err);

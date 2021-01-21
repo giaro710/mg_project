@@ -8,10 +8,6 @@ import Sidebar from './Sidebar/Sidebar';
 import './App.css';
 
 const App = (props) => {
-  // if (!props.authToken) {
-  //   return <Login />;
-  // }
-
   return (
     <div className="app">
       <BrowserRouter>
@@ -33,7 +29,10 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   console.log(state);
-  return { authToken: state.auth.token };
+  return {
+    authToken: state.auth.token,
+    isAuthenticated: state.auth.token !== null,
+  };
 };
 
 export default connect(mapStateToProps)(App);
