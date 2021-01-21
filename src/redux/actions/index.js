@@ -1,39 +1,53 @@
 import { types } from '../types';
 import axios from 'axios';
 
-export const sendUsernameAndPassword = (email, password) => {
-  // Questa action la chiami dal metodo handleSubmit attaccato all'onSubmit del form di login. Le altre cose legate ai singoli input rimangono ma così le spedisci insieme
-  return {
-    type: types.SETEMAILANDPASSWORD,
-    payload: { email, password },
-  };
-};
-
 const authStart = () => {
   return {
     type: types.AUTH_START,
   };
 };
 
-export const makeLogin = (email, password) => {
-  return (dispatch) => {
+export const authSuccess = (authData) => {
+  return {
+    type: types.AUTH_SUCCESS,
+    authData: authData,
+  };
+};
+
+export const authFail = (error) => {
+  return {
+    type: types.AUTH_FAIL,
+    error: error,
+  };
+};
+
+export const auth = (username, password) => {
+  return async (dispatch) => {
     dispatch(authStart());
-    const encryptedEmailAndPassword = btoa(email + ':' + password);
-    const encryptedAuthorisation = `Basic ${encryptedEmailAndPassword}`;
+    const encryptedUsernameAndPassword = btoa(username + ':' + password);
+    const encryptedAuthorisation = `Basic ${encryptedUsernameAndPassword}`;
 
     const authData = {
       headers: {
         Authentication: encryptedAuthorisation,
-        'Espo-Authorization': encryptedEmailAndPassword,
+        'Espo-Authorization': encryptedUsernameAndPassword,
         'Espo-Authorization-By-Token': false,
         'Espo-Authorization-Create-Token-Secret': true,
       },
     };
 
-    axios
+    await axios
       .get('http://proxy.interpares.net/api/v1/App/user', authData)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        // console.log(response);
+        // console.log(response.data.token);
+        // console.log(response.data.settings.authTokenLifetime);
+        dispatch(authSuccess(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(authFail(err));
+      });
   };
 };
 

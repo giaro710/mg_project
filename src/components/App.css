@@ -1,0 +1,22 @@
+.app {
+  /* display: flex; */
+  font-family: 'Manrope', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.app__container {
+  display: flex;
+}
+
+.app__sidebar-container {
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.212);
+}
+
+.app__main-content {
+  width: 85.5vw;
+  height: 100%;
+  padding: 30px;
+  /* border: solid 2px red; */
+}

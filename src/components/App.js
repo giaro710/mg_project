@@ -1,30 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Login from './Login/Login';
 import Login2 from './Login2';
 import Landing from './LandingPage/Landing';
+import Sidebar from './Sidebar/Sidebar';
+import './App.css';
 
-const App = () => {
-  const [token, setToken] = useState(true);
-
-  if (!token) {
-    return <Login />;
-    // N.B. Posso passare la funzione hook 'setToken' come props a login:
-    // return <Login setToken={setToken}/>;
-    // In questo modo posso prendere il token da redux e poi settarlo direttamente nel component del login.
-  }
+const App = (props) => {
+  // if (!props.authToken) {
+  //   return <Login />;
+  // }
 
   return (
-    <div>
+    <div className="app">
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Landing} />
           <Route path="/login" exact component={Login} />
-          <Route path="/login2" exact component={Login2} />
+          <div className="app__container">
+            <div className="app__sidebar-container">
+              <Sidebar />
+            </div>
+            <div className="app__main-content">
+              <Route path="/" exact component={Landing} />
+            </div>
+          </div>
         </Switch>
       </BrowserRouter>
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return { authToken: state.auth.token };
+};
+
+export default connect(mapStateToProps)(App);

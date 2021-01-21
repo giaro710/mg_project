@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import { makeLogin } from '../../redux/actions';
+import { auth } from '../../redux/actions';
 
 import './Login.css';
 
@@ -10,8 +11,6 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
-
-  console.log(password);
 
   const onUsernameChange = (event) => {
     const inputUsernameValue = event.target.value;
@@ -42,12 +41,17 @@ const Login = (props) => {
   };
 
   const handleSubmit = () => {
-    // console.log(email, password);
-    props.makeLogin(username, password);
+    props.auth(username, password);
   };
+
+  let authRedirect = null;
+  if (props.isAuthenticated) {
+    authRedirect = <Redirect to="/" />;
+  }
 
   return (
     <div className="login-container">
+      {authRedirect}
       <h2 className="login__title">Bentornato!</h2>
       <p className="login__sub-title">Accedi alla dashboard</p>
 
@@ -104,4 +108,12 @@ const Login = (props) => {
   );
 };
 
-export default connect(null, { makeLogin })(Login);
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    authToken: state.auth.token,
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps, { auth })(Login);
