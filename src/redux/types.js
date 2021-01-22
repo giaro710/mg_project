@@ -2,4 +2,5 @@ export const types = {
   AUTH_START: 'AUTH_START',
   AUTH_SUCCESS: 'AUTH_SUCCESS',
   AUTH_FAIL: 'AUTH_FAIL',
+  AUTH_LOG_OUT: 'AUTH_LOG_OUT',
 };

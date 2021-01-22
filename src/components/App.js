@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './Login/Login';
 import Login2 from './Login2';
@@ -28,7 +28,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     authToken: state.auth.token,
     isAuthenticated: state.auth.token !== null,

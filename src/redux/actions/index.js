@@ -8,6 +8,7 @@ const authStart = () => {
 };
 
 export const authSuccess = (authData) => {
+  console.log(authData);
   return {
     type: types.AUTH_SUCCESS,
     authData: authData,
@@ -25,25 +26,22 @@ export const auth = (username, password) => {
   return async (dispatch) => {
     dispatch(authStart());
     const encryptedUsernameAndPassword = btoa(username + ':' + password);
-    const encryptedAuthorisation = `Basic ${encryptedUsernameAndPassword}`;
+    const encryptedAuthorization = `Basic ${encryptedUsernameAndPassword}`;
 
     const authData = {
       headers: {
-        Authentication: encryptedAuthorisation,
+        Authorization: encryptedAuthorization,
         'Espo-Authorization': encryptedUsernameAndPassword,
-        'Espo-Authorization-By-Token': false,
-        'Espo-Authorization-Create-Token-Secret': true,
+        'Espo-Authorization-By-Token': 'false',
+        'Espo-Authorization-Create-Token-Secret': 'true',
       },
     };
 
     await axios
       .get('http://proxy.interpares.net/api/v1/App/user', authData)
       .then((response) => {
-        // console.log(response);
-        // console.log(response.data.token);
-        // console.log(response.data.settings.authTokenLifetime);
         dispatch(authSuccess(response.data));
-        this.props.history.push('/');
+        console.log('Pluto ciao come stai');
       })
       .catch((err) => {
         console.log(err);
@@ -52,27 +50,63 @@ export const auth = (username, password) => {
   };
 };
 
-// fetch('http://proxy.interpares.net/api/v1/App/user', {
-//       method: 'get',
-//       mode: 'cors',
-//       headers: {
-//           'Authentication': x,
-//           'Espo-Authorization': encryptedEmailAndPassword,
-//           'Espo-Authorization-By-Token': false,
-//           'Espo-Authorization-Create-Token-Secret': true,
-//       }
-//   })
+export const logOutAction = (username, token) => {
+  return async (dispatch) => {
+    const encryptedUsernameAndToken = btoa(username + ':' + token);
+    console.log('siamo dentro la action per logout', username, token);
+    const encryptedAuthorization = `Basic ${encryptedUsernameAndToken}`;
 
-// Basic Authentication
-// Note: This method is not recommended.
+    await axios
+      .post(
+        'http://proxy.interpares.net/api/v1/App/action/destroyAuthToken',
+        {
+          token: token,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: encryptedAuthorization,
+            'Espo-Authorization': encryptedUsernameAndToken,
+            'Espo-Authorization-By-Token': 'true',
+          },
+        }
+      )
+      .then((response) => {
+        // console.log(response);
+        dispatch({ type: types.AUTH_LOG_OUT });
+        this.props.history.push('/login');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
-// For regular users EspoCRM uses Basic Authentication. Username and password (or token) are passed through Authorization header encoded in base64.
+export const fetchQualcosa = (username, token) => {
+  const encryptedUsernameAndToken = btoa(username + ':' + token);
+  console.log(
+    'siamo dentro fetchQualcosa',
+    username,
+    token,
+    encryptedUsernameAndToken
+  );
+  const encryptedAuthorization = `Basic ${encryptedUsernameAndToken}`;
 
-// "Authorization: Basic " + base64Encode(username + ':' + password)
-
-// It's better to use auth token instead of password when you work with API. In this case you will need to provide username and password/token in Espo-Authorization header.
-
-// "Espo-Authorization: " + base64Encode(username  + ':' + passwordOrToken)
-// Obtain an access token by GET App/user request with the username and password passed in Espo-Authorization header.
-// Use this token instead of password in Espo-Authorization header for all further request.
-// If the request returns 401 error that means either username/password is wrong or token is not valid anymore.
+  return async (dispatch) => {
+    axios
+      .get('http://proxy.interpares.net/api/v1/Account', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: encryptedAuthorization,
+          'Espo-Authorization': encryptedUsernameAndToken,
+          'Espo-Authorization-By-Token': 'true',
+        },
+        params: {
+          maxSize: 20,
+          offset: 0,
+        },
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+  };
+};

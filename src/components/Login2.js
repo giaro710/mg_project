@@ -3,7 +3,7 @@ import React from 'react';
 const Login2 = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
+    // console.log(event.target.value);
   };
 
   return (

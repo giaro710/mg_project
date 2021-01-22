@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
 import { sidebarData } from './sidebarData';
+import LogOut from './LogOut';
 
 const Sidebar = () => {
   const [active, setActive] = useState(false);
@@ -29,6 +30,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <h1 className="sidebar__title">Sidebar menu</h1>
+      <LogOut />
       <ul className="sidebar__list">{renderData()}</ul>
     </div>
   );

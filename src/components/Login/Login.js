@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import { auth } from '../../redux/actions';
 
 import './Login.css';
@@ -11,6 +10,10 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidPassword, setInvalidPassword] = useState(false);
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   const onUsernameChange = (event) => {
     const inputUsernameValue = event.target.value;
@@ -87,7 +90,7 @@ const Login = (props) => {
           <input
             onChange={(e) => onPasswordChange(e)}
             className="login__input"
-            type="password"
+            type="text"
             placeholder="Password"
             value={password}
           />
@@ -109,7 +112,7 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
     authToken: state.auth.token,
     isAuthenticated: state.auth.token !== null,
